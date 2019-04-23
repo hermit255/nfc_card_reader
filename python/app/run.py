@@ -9,7 +9,8 @@ rds = redis.StrictRedis(host='redis', port=6379, db=0)
 
 @app.route('/')
 def show():
-  return '<html><body><h1>Receptor API mock</h1><p>last uid is : ' + rds.get('uid') + '</p><p>To emulate card touch, access <a href="/card_read_emulate">/card_read_emulate</a> then you get another UID</p></body></html>'
+  uid = 'no_uid' if rds.get('uid') == None else rds.get('uid')
+  return '<html><body><h1>Receptor API mock</h1><p>last uid is : ' + uid + '</p><p>To emulate card touch, access <a href="/card_read_emulate">/card_read_emulate</a> then you get another UID</p></body></html>'
 @app.route('/close')
 def close():
   nfc_manager.close()
